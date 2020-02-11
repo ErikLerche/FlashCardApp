@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">FlashCards</string>
+    <string name="ok_text">ok</string>
+    <string name="folder_name">Folder Name</string>
+    <string name="front">Front</string>
+    <string name="back">Back</string>
+    <string name="another">Another</string>
+    <string name="done">Done</string>
+    <string name="mistake">Something is fucked up</string>
+</resources>
