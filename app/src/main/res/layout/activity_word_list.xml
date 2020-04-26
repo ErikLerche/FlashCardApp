@@ -44,6 +44,16 @@
             android:tint="@android:color/darker_gray"
             app:srcCompat="@android:drawable/ic_input_add"/>
 
+        <ImageButton
+            android:id="@+id/shuffleListButton"
+            style="@style/Widget.AppCompat.ImageButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="shuffleWords"
+            android:tint="@android:color/darker_gray"
+            app:srcCompat="@android:drawable/ic_menu_rotate" />
+
     </LinearLayout>
 
 </RelativeLayout>
