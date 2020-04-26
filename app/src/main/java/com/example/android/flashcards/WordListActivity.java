@@ -39,6 +39,11 @@ public class WordListActivity extends AppCompatActivity {
                 buttonContainer.addView(v, i);
             }
         }
+        else {
+            Toast toast = Toast.makeText(getApplicationContext(), "darn", Toast.LENGTH_SHORT);
+            toast.show();
+            return;
+        }
     }
 
     public void addWord (View view){
@@ -47,6 +52,11 @@ public class WordListActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void shuffleWords(View view) {
+        currentFolder.shuffleCardList();
+        Intent intent = new Intent(this, WordListActivity.class);
+        startActivity(intent);
+    }
     public CardFolder getCurrentFolder() {
         return currentFolder;
     }
