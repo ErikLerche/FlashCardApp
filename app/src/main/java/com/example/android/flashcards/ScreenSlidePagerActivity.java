@@ -1,41 +1,79 @@
 package com.example.android.flashcards;
 
-import android.support.v4.app.Fragment;
+import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.os.Bundle;
+import android.widget.TextView;
+
+import java.util.ArrayList;
 
 public class ScreenSlidePagerActivity extends FragmentActivity {
 
-    private ViewPager mPager;
+    Boolean isFlipped;
+    int counter;
+    ArrayList<Card> newcardlist;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_screen_slide);
 
-        // Instantiate a ViewPager and a PagerAdapter.
-        mPager = (ViewPager) findViewById(R.id.pager);
-        PagerAdapter mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
-        mPager.setAdapter(mPagerAdapter);
+        isFlipped = false;
+        counter = 0;
+        newcardlist = DataHolder.getData().getCardList();
+
+        ((TextView) findViewById(R.id.card_text_button)).setText(newcardlist.get(0).getFront());
+
     }
 
-    @Override
-    public void onBackPressed() {
-        if (mPager.getCurrentItem() == 0) {
-            // If the user is currently looking at the first step, allow the system to handle the
-            // Back button. This calls finish() on this activity and pops the back stack.
-            super.onBackPressed();
-        } else {
-            // Otherwise, select the previous step.
-            mPager.setCurrentItem(mPager.getCurrentItem() - 1);
+    public void goNext(View view) {
+
+        if (counter < newcardlist.size() - 1) {
+            counter++;
+            ((TextView) findViewById(R.id.card_text_button)).setText(newcardlist.get(counter).getFront());
+        }
+        else {
+            counter = 0;
+            ((TextView) findViewById(R.id.card_text_button)).setText(newcardlist.get(counter).getFront());
         }
     }
 
+    public void goPrevious(View view) {
+        if (counter > 0) {
+            counter--;
+            ((TextView) findViewById(R.id.card_text_button)).setText(newcardlist.get(counter).getFront());
+        }
+        else{
+            counter = newcardlist.size() - 1;
+            ((TextView) findViewById(R.id.card_text_button)).setText(newcardlist.get(counter).getFront());
+        }
+    }
+
+
+    public void flipCard(View view) {
+        if (!isFlipped) {
+            ((TextView) findViewById(R.id.card_text_button)).setText(newcardlist.get(counter).getBack());
+            isFlipped = true;
+        }
+        else {
+            ((TextView) findViewById(R.id.card_text_button)).setText(newcardlist.get(counter).getFront());
+            isFlipped = false;
+        }
+    }
+
+    public void backToWordList(View view) {
+        Intent intent = new Intent(this, WordListActivity.class);
+        startActivity(intent);
+    }
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, WordListActivity.class);
+        startActivity(intent);
+            //super.onBackPressed();
+
+    }
+    /*
     private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
         public ScreenSlidePagerAdapter(FragmentManager fm) {
             super(fm);
@@ -49,6 +87,8 @@ public class ScreenSlidePagerActivity extends FragmentActivity {
         @Override
         public int getCount(){
         return DataHolder.getData().getCardList().size();
+
         }
     }
+    */
 }
