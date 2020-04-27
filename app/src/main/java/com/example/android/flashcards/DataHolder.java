@@ -1,6 +1,6 @@
 package com.example.android.flashcards;
 
-public class DataHolder {
+public  class DataHolder {
   private static CardFolder data = null;
 
   private static int cardTag = 0;

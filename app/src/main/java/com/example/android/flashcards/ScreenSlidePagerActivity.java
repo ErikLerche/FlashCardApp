@@ -70,7 +70,7 @@ public class ScreenSlidePagerActivity extends FragmentActivity {
     public void onBackPressed() {
         Intent intent = new Intent(this, WordListActivity.class);
         startActivity(intent);
-            //super.onBackPressed();
+        //super.onBackPressed();
 
     }
     /*
