@@ -21,13 +21,16 @@ public class WordListActivity extends AppCompatActivity {
 
         if(DataHolder.getData() != null) {
             setCurrentFolder(DataHolder.getData());
+            Button btn = (Button) findViewById(R.id.quiz_generate);
+            btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    quizActivity();
+                }
+            });
             //DataHolder.setData(null);
         }
-        if(currentFolder == null){
-            Toast toast = Toast.makeText(getApplicationContext(), "darn", Toast.LENGTH_SHORT);
-            toast.show();
-            return;
-        }
+
         if(!currentFolder.getCardList().isEmpty()){
             LinearLayout buttonContainer = findViewById(R.id.addWordView);
             LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -39,14 +42,27 @@ public class WordListActivity extends AppCompatActivity {
                 buttonContainer.addView(v, i);
             }
         }
+        else {
+            Toast toast = Toast.makeText(getApplicationContext(), "no cards yet", Toast.LENGTH_SHORT);
+            toast.show();
+            return;
+        }
     }
-
+    public void quizActivity(){
+        Intent quizIntent = new Intent(this, Quiz.class);
+        startActivity(quizIntent);
+    }
     public void addWord (View view){
         DataHolder.setData(currentFolder);
         Intent intent = new Intent(this, CardMaker.class);
         startActivity(intent);
     }
 
+    public void shuffleWords(View view) {
+        currentFolder.shuffleCardList();
+        Intent intent = new Intent(this, WordListActivity.class);
+        startActivity(intent);
+    }
     public CardFolder getCurrentFolder() {
         return currentFolder;
     }
@@ -63,6 +79,12 @@ public class WordListActivity extends AppCompatActivity {
     public void editCard (View view){
         DataHolder.setCardTag((int) view.getTag());
         Intent intent = new Intent(this, EditCard.class);
+        startActivity(intent);
+    }
+    @Override
+    public void onBackPressed(){
+        DataHolder.setData(null);
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 }

@@ -62,4 +62,10 @@ public class MainActivity extends AppCompatActivity {
         FolderList = folderList;
     }
 
+    @Override
+    public void onBackPressed(){
+
+    }
+
 }
+
